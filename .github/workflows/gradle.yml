@@ -27,7 +27,7 @@ jobs:
         gradle-version: '5.1.1'
 
     - name: Build APK
-      run: gradle build # 或 ./gradlew assembleRelease（如果用 wrapper）
+      run: gradle assembleRelease # 或 ./gradlew assembleRelease（如果用 wrapper）
 
     - name: Find APK
       id: find-apk

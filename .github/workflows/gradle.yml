@@ -35,16 +35,20 @@ jobs:
         APK_PATH=$(find . -name "*.apk" | head -1)
         echo "APK Path: $APK_PATH"
         echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
-
+    - name: Generate Date Tag
+      id: date
+      run: |
+        echo "TAG_NAME=dev-$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_OUTPUT
+      shell: bash
     - name: Create Release
       id: create-release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 自动使用 GitHub Token
-        CURRENT_DATE: ${{ format('{0}{1}{2}', github.run_date[0:4], github.run_date[5:7], github.run_date[8:10]) }}
+        
       with:
-        tag_name: dev-${{ env.CURRENT_DATE }}  # 例如 dev-20240419
-        release_name: Release dev-${{ env.CURRENT_DATE }}
+        tag_name: ${{ steps.date.outputs.TAG_NAME }}  # 例如 dev-20240419-142030
+        release_name: Release ${{ steps.date.outputs.TAG_NAME }}
         draft: false
         prerelease: false
 

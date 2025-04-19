@@ -41,9 +41,10 @@ jobs:
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 自动使用 GitHub Token
+        CURRENT_DATE: ${{ format(date('+%Y%m%d'), '') }}
       with:
-        tag_name: ${{ github.ref_name }} # 使用触发工作流的 tag（如 v1.0.0）
-        release_name: Release ${{ github.ref_name }}
+        tag_name: dev-${{ env.CURRENT_DATE }}  # 例如 dev-20240419
+        release_name: Release dev-${{ env.CURRENT_DATE }}
         draft: false
         prerelease: false
 
